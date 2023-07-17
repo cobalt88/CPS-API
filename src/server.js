@@ -1,10 +1,12 @@
 import express from 'express';
 const app = express();
 
-import api from './api/index.js';
-
+import apiRoutes from './api/routes/index.js';
 import dotenv from 'dotenv';
 dotenv.config()
+
+import mongoose from 'mongoose';
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/Population';
 
 // import loggin functions
 import { errorLogger, systemLogger } from './utils/logger.js';
@@ -18,7 +20,7 @@ const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
 import nodeProcess from "node:process"
 const port = process.env.PORT || 5555;
 
-app.use('/api', api);
+app.use('/api', apiRoutes);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,6 +37,18 @@ if (cluster.isPrimary) {
 		cluster.fork();
 	});
 } else {
+
+  	mongoose.connect(
+		MONGODB_URL,
+		{
+			ssl: true,
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			socketTimeoutMS: 30000,
+			maxPoolSize: 200,
+		},
+		() => console.log(" Mongoose is connected")
+	);
 
 	app.listen(port, () => {
 		const now = new Date();
