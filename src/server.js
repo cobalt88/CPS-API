@@ -2,11 +2,10 @@ import express from 'express';
 const app = express();
 
 import apiRoutes from './api/routes/index.js';
-import dotenv from 'dotenv';
-dotenv.config()
+import 'dotenv/config'
 
 import mongoose from 'mongoose';
-const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/Population';
+const MONGODB_URL = process.env.MONGO_POPULATIONS_URL
 
 // import loggin functions
 import { errorLogger, systemLogger } from './utils/logger.js';
@@ -37,8 +36,8 @@ if (cluster.isPrimary) {
 		cluster.fork();
 	});
 } else {
-
-  	mongoose.connect(
+  mongoose.set('strictQuery', true)
+	mongoose.connect(
 		MONGODB_URL,
 		{
 			ssl: true,

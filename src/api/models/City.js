@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-export const citySchema = new Schema({
+const citySchema = new Schema({
   City: {
     type: String,
     required: true,
@@ -20,3 +20,5 @@ export const citySchema = new Schema({
 {
   strict: true,
 })
+
+export const City = mongoose.model('City', citySchema);
