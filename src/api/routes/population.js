@@ -21,8 +21,7 @@ router.get('/test', async (req, res) => {
 })
 
 router.get('/state/:state/city/:city', cityControllers.getCity);
-router.put('/state/:state/city/:city', cityControllers.updateCity);
-router.post('/state/:state/city/:city', cityControllers.addNewCity);
+router.put('/state/:state/city/:city', cityControllers.addNewCity);
 router.delete('/state/:state/city/:city', cityControllers.deleteCity);
 
 export default router;

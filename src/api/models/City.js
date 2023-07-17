@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
 
-const citySchema = new Schema({
+const citySchema = new mongoose.Schema({
   City: {
     type: String,
     required: true,
-    unique: true,
   },
   State: {
     type: String,
@@ -18,7 +16,7 @@ const citySchema = new Schema({
   }
 },
 {
-  strict: true,
+  strict: true
 })
 
-export const City = mongoose.model('City', citySchema);
+export const Cities = mongoose.model('cities', citySchema);

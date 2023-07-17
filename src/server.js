@@ -5,7 +5,7 @@ import apiRoutes from './api/routes/index.js';
 import 'dotenv/config'
 
 import mongoose from 'mongoose';
-const MONGODB_URL = process.env.MONGO_POPULATIONS_URL
+const MONGODB_URL = "mongodb+srv://cps-api-local:obrbV3BGomtjwNJ2@cluster0.abmx1vn.mongodb.net/CPS-API?retryWrites=true&w=majority"
 
 // import loggin functions
 import { errorLogger, systemLogger } from './utils/logger.js';
@@ -36,15 +36,13 @@ if (cluster.isPrimary) {
 		cluster.fork();
 	});
 } else {
-  mongoose.set('strictQuery', true)
-	mongoose.connect(
+  console.log(MONGODB_URL)
+	await mongoose.connect(
 		MONGODB_URL,
 		{
 			ssl: true,
 			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			socketTimeoutMS: 30000,
-			maxPoolSize: 200,
+			useUnifiedTopology: true
 		},
 		() => console.log(" Mongoose is connected")
 	);
@@ -53,7 +51,7 @@ if (cluster.isPrimary) {
 		const now = new Date();
 		const timestamp = now.toISOString().slice(0, 19).replace("T", " ");
 		console.log(timestamp);
-		// systemLogger.log(`${timestamp} Server initiated, running on port ${port}`);
+		systemLogger.log(`${timestamp} Server initiated, running on port ${port}`);
 		console.log(
 			`Server initiated for ${nodeProcess.pid}, running on port ${port}`
 		);
