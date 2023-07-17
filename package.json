@@ -1,0 +1,34 @@
+{
+  "name": "cps-api",
+  "type": "module",
+  "description": "City population service api",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "none",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cobalt88/CPS-API.git"
+  },
+  "keywords": [
+    "Trazi",
+    "City",
+    "Population",
+    "Service",
+    "API"
+  ],
+  "author": "Vincent Teune - (Cobalt88)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cobalt88/CPS-API/issues"
+  },
+  "homepage": "https://github.com/cobalt88/CPS-API#readme"
+}
