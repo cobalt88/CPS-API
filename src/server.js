@@ -6,6 +6,9 @@ import api from './api/index.js';
 import dotenv from 'dotenv';
 dotenv.config()
 
+// import loggin functions
+import { errorLogger, systemLogger } from './utils/logger.js';
+
 // import cluster and os modules to initiate multiple instances of the server for load balancing
 import nodeCluster from "node:cluster"
 const cluster = nodeCluster;
@@ -13,7 +16,7 @@ import nodeOs from "node:os"
 // this is currently set to scale to the hardware it is running on with a max of 10 instances to prevent it from running on every core of a large scale server, for example you might not want to run 100 instances of this on a 100 core server
 const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
 import nodeProcess from "node:process"
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5555;
 
 app.use('/api', api);
 app.use(express.json({ limit: "50mb" }));
