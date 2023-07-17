@@ -2,14 +2,14 @@ import express from "express";
 const app = express();
 
 import apiRoutes from "./api/routes/index.js";
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 
 import mongoose from "mongoose";
-const MONGODB_URL =
-	"mongodb+srv://cps-api-local:obrbV3BGomtjwNJ2@cluster0.abmx1vn.mongodb.net/CPS-API?retryWrites=true&w=majority";
+const MONGODB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.CLUSTER}/?retryWrites=true&w=majority`;
 
-// import loggin functions
-import { errorLogger, systemLogger } from "./utils/logger.js";
+// import logging function
+import { systemLogger } from "./utils/logger.js";
 
 // import cluster and os modules to initiate multiple instances of the server for load balancing
 import nodeCluster from "node:cluster";
