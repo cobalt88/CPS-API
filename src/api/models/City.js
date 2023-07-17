@@ -16,7 +16,7 @@ const citySchema = new mongoose.Schema({
   }
 },
 {
-  strict: true
+  strict: false
 })
 
 export const Cities = mongoose.model('cities', citySchema);
