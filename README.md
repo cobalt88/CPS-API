@@ -58,7 +58,7 @@ CLUSTER="cluster0.abmx1vn.mongodb.net"
 
 I dont mind sharing the above information since that cluster is isolated and only contains one collection of data that is not updated regularly. If you want to use this application for your own purposes you will need to create your own cluster and database and update the .env file accordingly.
 
-The original dataset was obtained from [here](https://github.com/Trazi-Ventures/sample-data-interview/blob/main/city_populations.csv) and was then imported into a MongoDB database using MongoDB Compass after being cleaned up and normalized. The data is stored in a collection called "population" and has the following schema:
+The original dataset was obtained from [here](https://github.com/Trazi-Ventures/sample-data-interview/blob/main/city_populations.csv) and was then imported into a MongoDB database using MongoDB Compass after being cleaned up and normalized. The data is stored in a collection called "cities" and has the following schema:
 
 ```javascript
 {
