@@ -142,7 +142,9 @@ export const addNewCity = async (req, res) => {
 			message: `New city added: ${newCity.City} ${newCity.State}, Population: ${newCity.Population}`,
 		});
 	} catch (err) {
-		errorLogger.log(`${timestampUTC} Error encountered in addNewCity: ${err}`);
+		errorLogger.log(
+			`${timestampUTC()} Error encountered in addNewCity: ${err}`
+		);
 		res.status(500).json({ message: err.message });
 	}
 };
@@ -154,7 +156,7 @@ export const addNewCity = async (req, res) => {
  */
 
 export const deleteCity = async (req, res) => {
-	systemLogger.log(`${timestampUTC} deleteCity called`);
+	systemLogger.log(`${timestampUTC()} deleteCity called`);
 
 	try {
 		const city = await nameFormatter(req.params.city);
@@ -177,7 +179,9 @@ export const deleteCity = async (req, res) => {
 					message: `City: ${city} in State: ${state} does not exist in the database and cannot be deleted.`,
 			  });
 	} catch (err) {
-		errorLogger.log(`${timestampUTC} Error encountered in deleteCity: ${err}`);
+		errorLogger.log(
+			`${timestampUTC()} Error encountered in deleteCity: ${err}`
+		);
 		res.status(500).json({ message: err.message });
 	}
 };
