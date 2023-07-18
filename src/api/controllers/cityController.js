@@ -1,5 +1,5 @@
 import { Cities } from "../models/City.js";
-import { errorLogger, systemLogger } from "../../utils/logger.js";
+// import { errorLogger, systemLogger } from "../../utils/logger.js";
 import mongoose from "mongoose";
 
 // option 1 for making strings non-case senstive is to caliptalize the fist letter of every string to ensure uniform data entry.
@@ -19,13 +19,14 @@ const checkForCity = async (city, state) => {
 		});
 		return checkForCity;
 	} catch (err) {
-		errorLogger.log(`${timestamp} Error encountered in checkForCity: ${err}`);
+		// errorLogger.log(`${timestamp} Error encountered in checkForCity: ${err}`);
+		console.log(err);
 	}
 };
 
 export const getCity = async (req, res) => {
-	const timestamp = new Date().toISOString();
-	systemLogger.log(`${timestamp} getCity called`);
+	// const timestamp = new Date().toISOString();
+	// systemLogger.log(`${timestamp} getCity called`);
 	try {
 		const cityName = await nameFormatter(req.params.city);
 		const stateName = await nameFormatter(req.params.state);
@@ -38,14 +39,14 @@ export const getCity = async (req, res) => {
 					message: `No data for city: ${cityName}, in State: ${stateName}. Please check your search parameters and try again.`,
 			  });
 	} catch (err) {
-		errorLogger.log(`${timestamp} Error encountered in getCity: ${err}`);
+		// errorLogger.log(`${timestamp} Error encountered in getCity: ${err}`);
 		res.status(500).json({ message: err.message });
 	}
 };
 
 export const updateCity = async (req, res) => {
-	const timestamp = new Date().toISOString();
-	systemLogger.log(`${timestamp} updateCity called`);
+	// const timestamp = new Date().toISOString();
+	// systemLogger.log(`${timestamp} updateCity called`);
 	try {
 		const city = await nameFormatter(req.params.city);
 		const state = await nameFormatter(req.params.state);
@@ -66,14 +67,14 @@ export const updateCity = async (req, res) => {
 			message: `City: ${city} in State: ${state} has been updated in the database.`,
 		});
 	} catch (err) {
-		errorLogger.log(`${timestamp} Error encountered in updateCity: ${err}`);
+		// errorLogger.log(`${timestamp} Error encountered in updateCity: ${err}`);
 		res.status(500).json({ message: err.message });
 	}
 };
 
 export const addNewCity = async (req, res) => {
-	const timestamp = new Date().toISOString();
-	systemLogger.log(`${timestamp} addNewCity called`);
+	// const timestamp = new Date().toISOString();
+	// systemLogger.log(`${timestamp} addNewCity called`);
 	try {
 		const city = await nameFormatter(req.params.city);
 		const state = await nameFormatter(req.params.state);
@@ -104,14 +105,14 @@ export const addNewCity = async (req, res) => {
 			message: `New city added: ${newCity.City} ${newCity.State}, Population: ${newCity.Population}`,
 		});
 	} catch (err) {
-		errorLogger.log(`${timestamp} Error encountered in addNewCity: ${err}`);
+		// errorLogger.log(`${timestamp} Error encountered in addNewCity: ${err}`);
 		res.status(500).json({ message: err.message });
 	}
 };
 
 export const deleteCity = async (req, res) => {
-	const timestamp = new Date().toISOString();
-	systemLogger.log(`${timestamp} deleteCity called`);
+	// const timestamp = new Date().toISOString();
+	// systemLogger.log(`${timestamp} deleteCity called`);
 	try {
 		const city = await nameFormatter(req.params.city);
 		const state = await nameFormatter(req.params.state);
@@ -133,7 +134,7 @@ export const deleteCity = async (req, res) => {
 					message: `City: ${city} in State: ${state} does not exist in the database and cannot be deleted.`,
 			  });
 	} catch (err) {
-		errorLogger.log(`${timestamp} Error encountered in deleteCity: ${err}`);
+		// errorLogger.log(`${timestamp} Error encountered in deleteCity: ${err}`);
 		res.status(500).json({ message: err.message });
 	}
 };

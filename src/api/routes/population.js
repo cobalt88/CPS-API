@@ -1,5 +1,5 @@
 import express from "express";
-import { errorLogger, systemLogger } from "../../utils/logger.js";
+// import { errorLogger, systemLogger } from "../../utils/logger.js";
 import * as cityControllers from "../controllers/cityController.js";
 const router = express.Router();
 
@@ -10,14 +10,14 @@ const router = express.Router();
 */
 
 router.get("/test", async (req, res) => {
-	const timestamp = new Date().toLocaleString();
+	// const timestamp = new Date().toLocaleString();
 	try {
-		systemLogger.log(`${timestamp} Population test route called`);
+		// systemLogger.log(`${timestamp} Population test route called`);
 		res.status(200).json({ message: "Population route works" });
 	} catch (error) {
-		errorLogger.log(
-			`${timestamp} Population Test Route Error: ${error.message}`
-		);
+		// errorLogger.log(
+		// 	`${timestamp} Population Test Route Error: ${error.message}`
+		// );
 		res.status(500).json({ message: error.message });
 	}
 });

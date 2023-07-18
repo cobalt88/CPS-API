@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 const MONGODB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.CLUSTER}/?retryWrites=true&w=majority`;
 
 // import logging function
-import { systemLogger } from "./utils/logger.js";
+// import { systemLogger } from "./utils/logger.js";
 
 // import cluster and os modules to initiate multiple instances of the server for load balancing
 import nodeCluster from "node:cluster";
@@ -50,10 +50,9 @@ if (cluster.isPrimary) {
 	);
 
 	app.listen(port, () => {
-		const now = new Date();
-		const timestamp = now.toISOString().slice(0, 19).replace("T", " ");
-		console.log(timestamp);
-		systemLogger.log(`${timestamp} Server initiated, running on port ${port}`);
+		// const now = new Date();
+		// const timestamp = now.toISOString().slice(0, 19).replace("T", " ");
+		// systemLogger.log(`${timestamp} Server initiated, running on port ${port}`);
 		console.log(
 			`Server initiated for ${nodeProcess.pid}, running on port ${port}`
 		);
