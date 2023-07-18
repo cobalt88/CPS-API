@@ -2,7 +2,12 @@ import { Cities } from "../models/City.js";
 // import { errorLogger, systemLogger } from "../../utils/logger.js";
 import mongoose from "mongoose";
 
-// option 1 for making strings non-case senstive is to caliptalize the fist letter of every string to ensure uniform data entry.
+/**
+ * @function nameFormatter
+ * @param {String} x
+ * @returns String
+ * @description Capitalizes the first letter of every word in a string. Used to ensure data entry uniformity.
+ */
 const nameFormatter = (x) => {
 	const cap = x.split(" ").map((word) => {
 		return word[0].toUpperCase() + word.slice(1);
@@ -10,7 +15,13 @@ const nameFormatter = (x) => {
 	return cap.join(" ");
 };
 
-// option 2 for making strings non-case senstive is to use a regular expression to search for the string with the "i" flag
+/**
+ * @function checkForCity
+ * @param {String} city
+ * @param {String} state
+ * @returns {Object} cityData
+ * @description Checks the database for the city and state submitted by the user. Inputs are case insensitive.
+ */
 const checkForCity = async (city, state) => {
 	try {
 		const checkForCity = await Cities.findOne({
@@ -24,6 +35,11 @@ const checkForCity = async (city, state) => {
 	}
 };
 
+/**
+ * @function getCity
+ * @description Gets the population of a city in a state. Inputs are case insensitive.
+ * @returns {Object} city population data.
+ */
 export const getCity = async (req, res) => {
 	// const timestamp = new Date().toISOString();
 	// systemLogger.log(`${timestamp} getCity called`);

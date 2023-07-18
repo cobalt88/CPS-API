@@ -39,6 +39,7 @@ if (cluster.isPrimary) {
 	});
 } else {
 	console.log(MONGODB_URL);
+	mongoose.set("strictQuery", true);
 	await mongoose.connect(
 		MONGODB_URL,
 		{
@@ -50,8 +51,7 @@ if (cluster.isPrimary) {
 	);
 
 	app.listen(port, () => {
-		// const now = new Date();
-		// const timestamp = now.toISOString().slice(0, 19).replace("T", " ");
+		// const timestamp = new Date().toISOString();
 		// systemLogger.log(`${timestamp} Server initiated, running on port ${port}`);
 		console.log(
 			`Server initiated for ${nodeProcess.pid}, running on port ${port}`
