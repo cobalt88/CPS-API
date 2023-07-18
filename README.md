@@ -16,9 +16,9 @@
 
 ## Description
 
-This is a demo API built to demonstrate a bare bones REST API using Node.js, Express.js, Mongoose ODM, and MongoDB. It is a simple API that allows you to query a database of US cities and their populations. Presently this is not hosted anywhere as it using static data from a Mongo database that is not updated regularly, however you can run it locally or use it as a template for your own API.
+This is a demo API built to demonstrate a low latency - high capacity throughput REST API using Node.js, Express.js, Mongoose ODM, and MongoDB. The sample dataset is hosted in a M0 cluster on MongoDB Atlas and the API itself is not currently hosted anywhere as it is using static data from a Mongo database that is not updated regularly, however you can run it locally or use it as a template for your own API.
 
-This application also leverages the built in node OS and Cluster Modules for automatic load balancing. The server will automatically detect how many processing cores on the host machine and spawn 1 Primary node followed by 1 worker node for each additional core up to a maximum of 10. If youd like to use more or less than 10 instances you can change the value of this line of code found in the server.js
+This application also leverages the built in Node.JS OS and Cluster Modules for automatic load balancing. The server will automatically detect how many processing cores on the host machine and spawn 1 Primary node followed by 1 worker node for each additional core up to a maximum of 10. If youd like to use more or less than 10 instances you can change the value of this line of code found in the server.js
 
 ```javascript
 const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
@@ -26,7 +26,7 @@ const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
 
 The above ternary operator will set the number of instances to 10 if the host machine has more than cpu 10 cores (a hyperthreaded core counts as 2), otherwise it will set the number of instances to the number of cores on the host machine.
 
-The combination of a clustered Node API and an efficiently indexed MongoDB database makes for a very fast and efficient API that can handle an insane amount of traffic without running into the potential bottleneck of exceeding the call queue. Keep in mind however that the reason this is limited to 10 instances is because more than that has the ability to exceed the throughput of a MongoDB M0 and M10 Cluster. In local testing at the time of building the average response time for a request was under 100ms with the accetopn of the POST route wich was closer to 150ms on average due it needing to perform a more complex opteration of finding an object, then compairing it to the data in the request body before updating the object in the database.
+The combination of a clustered Node API and an efficiently indexed MongoDB database makes for a very fast and efficient API that can handle an insane amount of traffic without running into the potential bottleneck of exceeding the call queue. Keep in mind however that the reason this is limited to 10 instances is to prevent the api exceeding the throughput of a MongoDB M0 and M10 Cluster. In local testing at the time of building the average response time for a request was under 100ms with the acception of the POST route wich was closer to 150ms on average due it needing to perform a more complex opteration of finding an object, then compairing it to the data in the request body before updating the object in the database.
 
 ## Installation Instructions
 
@@ -50,6 +50,14 @@ First and foremost you will need to have a .env file in the root directory of th
 USER="cps-api-local"
 PASSWORD="obrbV3BGomtjwNJ2"
 CLUSTER="cluster0.abmx1vn.mongodb.net"
+```
+
+These variables can be obtained by creating a free MongoDB Atlas account and cluster, setting up a user and password, and then connecting to the cluster using the connection string provided by MongoDB Atlas.
+
+example connection string:
+
+```
+mongodb+srv://<username>:<password>@<cluster>/retryWrites=true&w=majority
 ```
 
 I dont mind sharing the above information since that cluster is isolated and only contains one collection of data that is not updated regularly. If you want to use this application for your own purposes you will need to create your own cluster and database and update the .env file accordingly.
