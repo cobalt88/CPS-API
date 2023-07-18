@@ -24,11 +24,13 @@ This application also leverages the built in node OS and Cluster Modules for aut
 const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
 ```
 
-this ternary operator will set the number of instances to 10 if the host machine has more than 10 cores, otherwise it will set the number of instances to the number of cores on the host machine.
+The above ternary operator will set the number of instances to 10 if the host machine has more than cpu 10 cores (a hyperthreaded core counts as 2), otherwise it will set the number of instances to the number of cores on the host machine.
+
+The combination of a clustered Node API and an efficiently indexed MongoDB database makes for a very fast and efficient API that can handle an insane amount of traffic without running into the potential bottleneck of exceeding the call queue. Keep in mind however that the reason this is limited to 10 instances is because more than that has the ability to exceed the throughput of a MongoDB M0 and M10 Cluster. In local testing at the time of building the average response time for a request was under 100ms with the accetopn of the POST route wich was closer to 150ms on average due it needing to perform a more complex opteration of finding an object, then compairing it to the data in the request body before updating the object in the database.
 
 ## Installation Instructions
 
-setup will run a script to create local log files
+Setup will run a script to create local log files
 
 ```
 $ npm run setup
@@ -60,22 +62,35 @@ I dont mind sharing the above information since that cluster is isolated and onl
 
 The original dataset was obtained from [here](https://github.com/Trazi-Ventures/sample-data-interview/blob/main/city_populations.csv) and was then imported into a MongoDB database using MongoDB Compass after being cleaned up and normalized. The data is stored in a collection called "cities" and has the following schema:
 
-```javascript
+```json
 {
-    "_id": {
-        "$oid": "60f3b0c9a2e7c3b4a8f7b7b5"
-    },
-    "City": "New York",
-    "State": "New York",
-    "Population": 8398748
+	"_id": {
+		"$oid": "60f3b0c9a2e7c3b4a8f7b7b5"
+	},
+	"City": "New York",
+	"State": "New York",
+	"Population": 8398748
 }
-
 ```
 
 Once the local version is up and running you can use the following route to access the data in GET POST PUT and DELETE requests.
 
 ```
  http://127.0.0.1:5555/api/population/state/:state/city/:city
+```
+
+example request:
+
+```
+http://127.0.0.1:5555/api/population/state/new%20york/city/new%20york
+```
+
+example request body:
+
+```json
+{
+	"population": 8398748
+}
 ```
 
 for GET and DELETE requests only the city and state are required, for POST and PUT requests you must also include the population in the body of the request.

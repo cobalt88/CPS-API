@@ -2,10 +2,12 @@ import { Cities } from "../models/City.js";
 import { errorLogger, systemLogger } from "../../utils/logger.js";
 import mongoose from "mongoose";
 
-// option 1 for making strings non-case senstive is to caliptalize the fist letter of every string to esure uniform data entry
+// option 1 for making strings non-case senstive is to caliptalize the fist letter of every string to ensure uniform data entry.
 const nameFormatter = (x) => {
-	const cap = x.charAt(0).toUpperCase() + x.slice(1);
-	return cap;
+	const cap = x.split(" ").map((word) => {
+		return word[0].toUpperCase() + word.slice(1);
+	});
+	return cap.join(" ");
 };
 
 // option 2 for making strings non-case senstive is to use a regular expression to search for the string with the "i" flag
@@ -25,8 +27,8 @@ export const getCity = async (req, res) => {
 	const timestamp = new Date().toISOString();
 	systemLogger.log(`${timestamp} getCity called`);
 	try {
-		const cityName = req.params.city;
-		const stateName = req.params.state;
+		const cityName = await nameFormatter(req.params.city);
+		const stateName = await nameFormatter(req.params.state);
 
 		const cityData = await checkForCity(cityName, stateName);
 		// if no data is found inform the user that the city and state they are searching for is not in the database and return the values they submitted.
