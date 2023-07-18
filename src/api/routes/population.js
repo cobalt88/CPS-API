@@ -12,11 +12,11 @@ const router = express.Router();
 
 router.get("/test", async (req, res) => {
 	try {
-		systemLogger.log(`${timestampUTC} Population test route called`);
+		systemLogger.log(`${timestampUTC()} Population test route called`);
 		res.status(200).json({ message: "Population route works" });
 	} catch (error) {
 		errorLogger.log(
-			`${timestampUTC} Population Test Route Error: ${error.message}`
+			`${timestampUTC()} Population Test Route Error: ${error.message}`
 		);
 		res.status(500).json({ message: error.message });
 	}
