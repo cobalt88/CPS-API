@@ -30,12 +30,6 @@ The combination of a clustered Node API and an efficiently indexed MongoDB datab
 
 ## Installation Instructions
 
-Setup will run a script to create local log files
-
-```
-$ npm run setup
-```
-
 npm install will install all dependencies (the few there are)
 
 ```

@@ -9,7 +9,6 @@
 	},
 	"scripts": {
 		"test": "none",
-		"setup": "cd src  && mkdir logs && cd logs && touch error.log && touch system.log",
 		"start": "node src/server.js",
 		"dev": "nodemon src/server.js"
 	},
