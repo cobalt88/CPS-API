@@ -9,7 +9,7 @@ import nodeOs from "node:os";
 import nodeProcess from "node:process";
 
 dotenv.config();
-const MONGODB_URL = `mongodb+srv://cps-api-local:obrbV3BGomtjwNJ2@cluster0.abmx1vn.mongodb.net/?retryWrites=true&w=majority`;
+const MONGODB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.CLUSTER}/?retryWrites=true&w=majority`;
 const cluster = nodeCluster;
 const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
 const port = process.env.PORT || 5555;
@@ -30,7 +30,6 @@ if (cluster.isPrimary) {
 		cluster.fork();
 	});
 } else {
-	console.log(MONGODB_URL);
 	mongoose.set("strictQuery", true);
 	await mongoose.connect(
 		MONGODB_URL,
