@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", apiRoutes);
 
-if (cluster.isPrimary) {
+if (cluster.isPrimary && numCPUs > 2) {
 	console.log(`Primary node ${nodeProcess.pid} is running`);
 	for (let i = 0; i < numCPUs; i++) {
 		cluster.fork();
