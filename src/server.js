@@ -7,8 +7,8 @@ import { timestampUTC } from "./utils/timestamp.js";
 import nodeCluster from "node:cluster";
 import nodeOs from "node:os";
 import nodeProcess from "node:process";
-
 dotenv.config();
+
 const MONGODB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.CLUSTER}/?retryWrites=true&w=majority`;
 const cluster = nodeCluster;
 const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
