@@ -7,7 +7,8 @@ import { timestampUTC } from "./utils/timestamp.js";
 import nodeCluster from "node:cluster";
 import nodeOs from "node:os";
 import nodeProcess from "node:process";
-dotenv.config();
+import "dotenv/config";
+// import lambda handler aws aws sdk
 
 const MONGODB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${process.env.CLUSTER}/?retryWrites=true&w=majority`;
 const cluster = nodeCluster;
@@ -42,11 +43,7 @@ if (cluster.isPrimary && numCPUs > 2) {
 	);
 
 	app.listen(port, () => {
-		systemLogger.log(
-			`${timestampUTC()} Server initiated, running on port ${port}`
-		);
-		console.log(
-			`Server initiated for ${nodeProcess.pid}, running on port ${port}`
-		);
+		systemLogger.log(`${timestampUTC()} Server initiated, running on port ${port}`);
+		console.log(`Server initiated for ${nodeProcess.pid}, running on port ${port}`);
 	});
 }
