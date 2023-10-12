@@ -46,6 +46,8 @@ $ npm start
 
 ## How To Use
 
+Better documentation is comming - but for now the primary endpoint is a get request to return the city population.
+
 The original dataset was obtained from [here](https://github.com/Trazi-Ventures/sample-data-interview/blob/main/city_populations.csv) and was then imported into a MongoDB Collection using MongoDB Compass after being cleaned up and normalized. The data is stored in the following format:
 
 Example Document:
