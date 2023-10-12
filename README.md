@@ -16,9 +16,9 @@
 
 ## Description
 
-This is a demo API built to demonstrate a low latency - high capacity throughput REST API using Node.js, Express.js, Mongoose ODM, and MongoDB. The sample dataset is hosted in a M0 cluster on MongoDB Atlas, currently hosted on AWS with EC2, Elastic Beanstalk, and CodePipeline. You can run it locally with a little configuration or use it as a template for your own API.
+This API was originally built to demonstrate a low latency - high capacity throughput REST API using Node.js, Express.js, Mongoose ODM, and MongoDB. The sample dataset is hosted in a M0 cluster on MongoDB Atlas, currently hosted on AWS with EC2, Elastic Beanstalk, and CodePipeline. You can test the live version of the API using the following base URL: http://cps-api.us-east-2.elasticbeanstalk.com/
 
-This application leverages the built in Node.JS OS and Cluster Modules for automatic load balancing (if you dont want/need to use AWS ElasticLoadBalancer). The server will automatically detect how many processing cores on the host machine and spawn 1 Primary node followed by 1 worker node for each additional core up to a maximum of 10. If youd like to use more or less than 10 instances you can change the value of this line of code found in the server.js
+If run locally - this application leverages the built in Node.JS OS and Cluster Modules for automatic load balancing (if you dont want/need to use AWS ElasticLoadBalancer). The server will automatically detect how many processing cores are on the host machine and spawn 1 Primary node followed by 1 worker node for each additional core up to a maximum of 10. If youd like to use more or less than 10 instances you can change the value of this line of code found in the server.js
 
 ```javascript
 const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
@@ -26,13 +26,11 @@ const numCPUs = nodeOs.cpus().length > 10 ? 10 : nodeOs.cpus().length;
 
 The above ternary operator will set the number of instances to 10 if the host machine has more than cpu 10 cores (a hyperthreaded core counts as 2), otherwise it will set the number of instances to the number of cores on the host machine.
 
-The combination of a clustered Node API and an efficiently indexed MongoDB database makes for a very fast and efficient API that can handle an insane amount of traffic without running into the potential bottleneck of exceeding the call queue. Keep in mind however that the reason this is limited to 10 instances is to prevent the api exceeding the throughput of a MongoDB M0 and M10 Cluster. In local testing at the time of building the average response time for a request was under 100ms with the acception of the POST route wich was closer to 150ms on average due it needing to perform a more complex opteration of finding an object, then compairing it to the data in the request body before updating the object in the database.
-
-To test the live version of the API you can use the following base URL:
-
-http://cps-api.us-east-2.elasticbeanstalk.com/
+Combining a clustered Node API and an efficiently indexed Mongo Database makes for an exceedingly fast and efficient API that can handle an insane amount of traffic without running into the potential bottleneck of exceeding the call queue or slowing down due to blocking actions. Keep in mind however that the reason this is limited to 10 instances is to prevent the api exceeding the throughput of a MongoDB M0 and M10 Cluster. In local testing at the time of building the average response time for a request was under 100ms with the acception of the POST route wich was closer to 150ms on average due it needing to perform a more complex opteration.
 
 ## Installation Instructions
+
+To create your own local version of this api to play around with:
 
 npm install will install all dependencies (the few there are)
 
@@ -48,26 +46,10 @@ $ npm start
 
 ## How To Use
 
-First and foremost you will need to have a .env file in the root directory of the application with the following variables:
-
-```
-USER= <MongoDB User>
-PASSWORD= <MongoDB Password>
-CLUSTER= <MongoDB Cluster>
-```
-
-These variables can be obtained by creating a free MongoDB Atlas account and cluster, setting up a user and password, and then connecting to the cluster using the connection string provided by MongoDB Atlas.
-
-example connection string:
-
-```
-mongodb+srv://<username>:<password>@<cluster>/retryWrites=true&w=majority
-```
-If you plan to modify this application for your own purposes you will need to create your own cluster and database and update the .env file accordingly.
-
-The original dataset was obtained from [here](https://github.com/Trazi-Ventures/sample-data-interview/blob/main/city_populations.csv) and was then imported into a MongoDB Collection using MongoDB Compass after being cleaned up and normalized. The data has the following schema:
+The original dataset was obtained from [here](https://github.com/Trazi-Ventures/sample-data-interview/blob/main/city_populations.csv) and was then imported into a MongoDB Collection using MongoDB Compass after being cleaned up and normalized. The data is stored in the following format:
 
 Example Document:
+
 ```json
 {
 	"_id": {
@@ -79,16 +61,16 @@ Example Document:
 }
 ```
 
-Once the local version is up and running you can use the following route to access the data in GET POST PUT and DELETE requests.
+Request url format:
 
 ```
- http://127.0.0.1:5555/api/population/state/:state/city/:city
+ http://cps-api.us-east-2.elasticbeanstalk.com/api/population/state/:state/city/:city
 ```
 
-Example Request URL:
+Example Request URL to find the population of New York City:
 
 ```
-http://127.0.0.1:5555/api/population/state/new%20york/city/new%20york
+http://cps-api.us-east-2.elasticbeanstalk.com/api/population/state/new%20york/city/new%20york
 ```
 
 Example request body (only needed for post and put requests):
@@ -99,7 +81,7 @@ Example request body (only needed for post and put requests):
 }
 ```
 
-for GET and DELETE requests only the city and state are required, for POST and PUT requests you must also include the population in the body of the request.
+For GET and DELETE requests only the city and state are required, for POST and PUT requests you must also include the population in the body of the request.
 
 There is a built in logging feature for both system events and error events that will log to a file in the logs folder. A typical event will appear as follows:
 
