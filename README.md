@@ -1,4 +1,4 @@
-# CPS-API
+# CPS-API - No Longer Hosted
 
 <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"> &nbsp;
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"> &nbsp;
@@ -16,7 +16,7 @@
 
 ## Description
 
-This API was originally built to demonstrate a low latency - high capacity throughput REST API using Node.js, Express.js, Mongoose ODM, and MongoDB. The sample dataset is hosted in a M0 cluster on MongoDB Atlas, currently hosted on AWS with EC2, Elastic Beanstalk, and CodePipeline. You can test the live version of the API using the following base URL: http://cps-api.us-east-2.elasticbeanstalk.com/
+This API was originally built to demonstrate a low latency - high capacity throughput REST API using Node.js, Express.js, Mongoose ODM, and MongoDB. The sample dataset is hosted in a M0 cluster on MongoDB Atlas, currently hosted on AWS with EC2, Elastic Beanstalk, and CodePipeline. 
 
 If run locally - this application leverages the built in Node.JS OS and Cluster Modules for automatic load balancing (if you dont want/need to use AWS ElasticLoadBalancer). The server will automatically detect how many processing cores are on the host machine and spawn 1 Primary node followed by 1 worker node for each additional core up to a maximum of 10. If youd like to use more or less than 10 instances you can change the value of this line of code found in the server.js
 
